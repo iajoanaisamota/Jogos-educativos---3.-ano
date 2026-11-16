@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+
+<html lang="pt-PT">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>A Fábrica de Presentes</title>
+
+<style>
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+body {
+
+  margin: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  background: #f5f2e9;
+
+  color: #244137;
+
+}
+
+header {
+
+  background: #194b3b;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 28px 16px;
+
+}
+
+header h1 {
+
+  font-size: clamp(28px, 5vw, 42px);
+
+  margin: 8px 0;
+
+}
+
+header p {
+
+  color: #e4ede5;
+
+  margin: 0;
+
+}
+
+main {
+
+  width: min(100% - 28px, 720px);
+
+  margin: 24px auto 60px;
+
+}
+
+.card {
+
+  background: #fffefa;
+
+  border: 1px solid #e7e3d7;
+
+  border-radius: 22px;
+
+  padding: 25px;
+
+  box-shadow: 0 8px 24px #24413712;
+
+}
+
+h2 {
+
+  font-size: 26px;
+
+  margin-top: 4px;
+
+}
+
+p {
+
+  line-height: 1.6;
+
+}
+
+.scene {
+
+  background: #e7efe6;
+
+  border-radius: 18px;
+
+  text-align: center;
+
+  padding: 24px 12px;
+
+  margin: 18px 0;
+
+}
+
+.scene .icons {
+
+  font-size: clamp(32px, 6vw, 55px);
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+
+}
+
+.scene p {
+
+  color: #607469;
+
+  margin: 8px 0 0;
+
+}
+
+button {
+
+  font: inherit;
+
+  cursor: pointer;
+
+  border: none;
+
+  border-radius: 14px;
+
+  padding: 15px 20px;
+
+  min-height: 50px;
+
+  font-weight: 700;
+
+  touch-action: manipulation;
+
+}
+
+button:focus-visible,
+
+input:focus-visible {
+
+  outline: 3px solid #d5a64d;
+
+  outline-offset: 3px;
+
+}
+
+.primary {
+
+  background: #b83f3b;
+
+  color: white;
+
+}
+
+.green {
+
+  background: #235b47;
+
+  color: white;
+
+}
+
+.secondary {
+
+  background: #e9e9df;
+
+  color: #244137;
+
+}
+
+button:disabled {
+
+  opacity: .5;
+
+  cursor: default;
+
+}
+
+input {
+
+  font: inherit;
+
+  font-size: 22px;
+
+  padding: 14px;
+
+  border: 2px solid #cbd9cd;
+
+  border-radius: 12px;
+
+  max-width: 100%;
+
+}
+
+input[type="number"] {
+
+  width: 130px;
+
+  text-align: center;
+
+}
+
+input[type="text"] {
+
+  width: 100%;
+
+  max-width: 360px;
+
+}
+
+.answers {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+
+  margin: 20px 0;
+
+}
+
+.answer {
+
+  background: #eff5eb;
+
+  border: 2px solid #d1e1cf;
+
+  color: #244137;
+
+  font-size: 25px;
+
+  min-height: 70px;
+
+}
+
+.answer.selected {
+
+  background: #d0e9d1;
+
+  border-color: #367f58;
+
+}
+
+.controls {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 22px;
+
+}
+
+.progress {
+
+  background: #dfe5dc;
+
+  height: 13px;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  margin: 12px 0 8px;
+
+}
+
+.progress-fill {
+
+  background: #b83f3b;
+
+  height: 100%;
+
+  width: 0%;
+
+  transition: width .3s;
+
+}
+
+.progress-label {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #607469;
+
+}
+
+.badges {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin: 18px 0;
+
+}
+
+.badge {
+
+  background: #e3eae0;
+
+  padding: 10px 12px;
+
+  border-radius: 12px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+.badge.done {
+
+  background: #cce9cf;
+
+}
+
+.mission-label {
+
+  color: #a27c34;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+.feedback {
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  background: #fff0d4;
+
+  color: #604919;
+
+  margin-top: 15px;
+
+  font-weight: 700;
+
+}
+
+.feedback.correct {
+
+  background: #dff1df;
+
+  color: #205c3e;
+
+}
+
+.hint {
+
+  background: #f2eddc;
+
+  border-left: 4px solid #d2ad5f;
+
+  padding: 15px;
+
+  border-radius: 8px;
+
+  margin-top: 15px;
+
+}
+
+.number-inputs {
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  margin: 20px 0;
+
+}
+
+.hidden {
+
+  display: none !important;
+
+}
+
+footer {
+
+  text-align: center;
+
+  margin-top: 28px;
+
+  color: #687d70;
+
+  font-size: 13px;
+
+}
+
+@media (max-width: 450px) {
+
+  .card {
+
+    padding: 18px;
+
+  }
+
+  .answers {
+
+    gap: 8px;
+
+  }
+
+  .answer {
+
+    font-size: 22px;
+
+  }
+
+  .controls button {
+
+    flex-grow: 1;
+
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  * {
+
+    transition: none !important;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div>🎄 MISSÕES DE NATAL 🎄</div>
+
+  <h1>A Fábrica de Presentes</h1>
+
+  <p>Uma aventura matemática para pequenos duendes</p>
+
+</header>
+
+<main>
+
+<section id="start" class="card">
+
+  <div class="scene">
+
+    <div class="icons">🏠 🎄 🎁 🛷</div>
+
+    <p>A oficina do Pai Natal está à tua espera.</p>
+
+  </div>
+
+  <h2>Bem-vindo à oficina</h2>
+
+  <p>
+
+    O Pai Natal precisa de ajuda.
+
+    Os duendes têm muitos presentes para preparar
+
+    e só tu podes ajudá-los a terminar a missão.
+
+  </p>
+
+  <p>
+
+    Vais enfrentar quatro missões matemáticas.
+
+    Cada missão tem três desafios.
+
+  </p>
+
+  <label for="nickname">Como queres ser chamado?</label>
+
+  <br><br>
+
+  <input
+
+    type="text"
+
+    id="nickname"
+
+    maxlength="22"
+
+    placeholder="O teu nome de duende"
+
+    autocomplete="off"
+
+  >
+
+  <div class="controls">
+
+    <button class="primary" id="startButton">
+
+      Começar a aventura →
+
+    </button>
+
+  </div>
+
+</section>
+
+<section id="game" class="hidden">
+
+  <div class="progress-label">
+
+    <span id="progressText">Desafio 1 de 12</span>
+
+    <span id="presentText">0 presentes</span>
+
+  </div>
+
+  <div class="progress">
+
+    <div class="progress-fill" id="progressFill"></div>
+
+  </div>
+
+  <div class="badges" id="badges"></div>
+
+  <div class="card">
+
+    <div class="mission-label" id="missionLabel"></div>
+
+    <h2 id="missionTitle"></h2>
+
+    <p id="question"></p>
+
+    <div class="scene">
+
+      <div class="icons" id="illustration"></div>
+
+      <p id="sceneDescription"></p>
+
+    </div>
+
+    <div id="answerArea"></div>
+
+    <div id="hint" class="hint hidden"></div>
+
+    <div
+
+      id="feedback"
+
+      class="feedback hidden"
+
+      role="status"
+
+      aria-live="polite"
+
+    ></div>
+
+    <div class="controls">
+
+      <button class="primary" id="checkButton">
+
+        Verificar resposta
+
+      </button>
+
+      <button class="secondary" id="hintButton">
+
+        💡 Preciso de uma pista
+
+      </button>
+
+      <button class="green hidden" id="nextButton">
+
+        Continuar →
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="finish" class="card hidden">
+
+  <div class="scene">
+
+    <div class="icons">🎄 🎁 🛷 🌟</div>
+
+    <p>O trenó já pode partir!</p>
+
+  </div>
+
+  <h2>Missão cumprida</h2>
+
+  <p id="certificate"></p>
+
+  <p>
+
+    Concluíste as quatro missões matemáticas,
+
+    preparaste os 12 presentes e ajudaste
+
+    o Pai Natal a salvar o Natal.
+
+  </p>
+
+  <div class="scene">
+
+    <div class="icons">🏅</div>
+
+    <p><strong>Ajudante Oficial do Pai Natal</strong></p>
+
+  </div>
+
+  <div class="controls">
+
+    <button class="primary" id="restartButton">
+
+      Jogar novamente
+
+    </button>
+
+  </div>
+
+</section>
+
+<footer>
+
+  Aprende ao teu ritmo · Sem limite de tempo · Matemática do 3.º ano
+
+</footer>
+
+</main>
+
+<script>
+
+"use strict";
+
+const missions = [
+
+  {
+
+    title: "A Oficina dos Brinquedos",
+
+    subject: "Multiplicação"
+
+  },
+
+  {
+
+    title: "Os Sacos do Pai Natal",
+
+    subject: "Divisão exata"
+
+  },
+
+  {
+
+    title: "As Etiquetas Perdidas",
+
+    subject: "Sequências e cálculo mental"
+
+  },
+
+  {
+
+    title: "O Grande Carregamento",
+
+    subject: "Adição e problemas"
+
+  }
+
+];
+
+const questions = [
+
+  {
+
+    mission: 0,
+
+    text: "Cada caixa tem 6 brinquedos. Há 7 caixas. Quantos brinquedos existem ao todo?",
+
+    answer: 42,
+
+    options: [42, 36, 48, 56],
+
+    hint: "Pensa em 7 grupos de 6 brinquedos. Quanto é 6 × 7?",
+
+    illustration: "📦 📦 📦 📦 📦 📦 📦"
+
+  },
+
+  {
+
+    mission: 0,
+
+    text: "Há 8 prateleiras com 7 presentes em cada uma. Quantos presentes estão arrumados?",
+
+    answer: 56,
+
+    options: [54, 64, 56, 49],
+
+    hint: "Usa a tabuada do 7. Quanto é 7 × 8?",
+
+    illustration: "🎁 🎁 🎁 🎁 🎁 🎁 🎁 🎁"
+
+  },
+
+  {
+
+    mission: 0,
+
+    text: "Um duende embrulha 8 presentes por hora. Quantos presentes embrulha em 6 horas?",
+
+    answer: 48,
+
+    options: [42, 56, 48, 36],
+
+    hint: "Multiplica o número de presentes pelo número de horas: 8 × 6.",
+
+    illustration: "🧝 🎁 🎁 🎁 🎁 🎁 🎁"
+
+  },
+
+  {
+
+    mission: 1,
+
+    text: "Os duendes têm 48 brinquedos para distribuir igualmente por 6 sacos. Quantos brinquedos ficam em cada saco?",
+
+    answer: 8,
+
+    options: [6, 7, 8, 9],
+
+    hint: "Procura um número que, multiplicado por 6, dê 48.",
+
+    illustration: "🧺 🧺 🧺 🧺 🧺 🧺"
+
+  },
+
+  {
+
+    mission: 1,
+
+    text: "Há 56 chocolates para distribuir igualmente por 8 duendes. Quantos chocolates recebe cada duende?",
+
+    answer: 7,
+
+    options: [6, 8, 7, 9],
+
+    hint: "Pensa na tabuada do 8. Quanto é 8 × 7?",
+
+    illustration: "🍫 🧝 🍫 🧝 🍫 🧝 🍫 🧝"
+
+  },
+
+  {
+
+    mission: 1,
+
+    text: "O Pai Natal tem 80 presentes para distribuir igualmente por 8 trenós. Quantos presentes leva cada trenó?",
+
+    answer: 10,
+
+    options: [8, 9, 12, 10],
+
+    hint: "Quanto é 80 dividido por 8? Pensa em 8 grupos iguais.",
+
+    illustration: "🛷 🛷 🛷 🛷 🛷 🛷 🛷 🛷"
+
+  },
+
+  {
+
+    mission: 2,
+
+    text: "Completa a sequência: 120, 140, 160, ___, ___.",
+
+    answer: [180, 200],
+
+    hint: "Observa a diferença entre os números. A sequência aumenta sempre 20 unidades.",
+
+    illustration: "🏷️ 120 → 140 → 160 → ? → ?"
+
+  },
+
+  {
+
+    mission: 2,
+
+    text: "Descobre o número que falta: 350 + ___ = 500.",
+
+    answer: 150,
+
+    hint: "De 350 até 400 faltam 50. De 400 até 500 faltam 100.",
+
+    illustration: "🏷️ 350 + ? = 500"
+
+  },
+
+  {
+
+    mission: 2,
+
+    text: "Completa a sequência: 960, 880, 800, ___, ___.",
+
+    answer: [720, 640],
+
+    hint: "Cada número é 80 unidades menor do que o anterior.",
+
+    illustration: "🏷️ 960 → 880 → 800 → ? → ?"
+
+  },
+
+  {
+
+    mission: 3,
+
+    text: "Na segunda-feira, os duendes prepararam 245 presentes. Na terça-feira, prepararam mais 178. Quantos presentes prepararam nos dois dias?",
+
+    answer: 423,
+
+    hint: "Faz a adição 245 + 178. Podes utilizar o algoritmo da adição.",
+
+    illustration: "📦 245 + 📦 178"
+
+  },
+
+  {
+
+    mission: 3,
+
+    text: "A oficina tinha 368 presentes e recebeu mais 257. Quantos presentes tem agora?",
+
+    answer: 625,
+
+    hint: "Calcula 368 + 257. Começa pelas unidades e não te esqueças das trocas.",
+
+    illustration: "🏠 368 + 🚚 257"
+
+  },
+
+  {
+
+    mission: 3,
+
+    text: "O Pai Natal precisa de 800 presentes. Já tem 345 no primeiro trenó e 278 no segundo. Quantos presentes faltam preparar?",
+
+    answer: 177,
+
+    hint: "Primeiro calcula 345 + 278. Depois descobre quanto falta desse total até 800.",
+
+    illustration: "🛷 345 + 🛷 278 → 🎁 800"
+
+  }
+
+];
+
+let currentQuestion = 0;
+
+let selectedAnswer = null;
+
+let solved = false;
+
+let playerName = "";
+
+const storageKey = "fabrica-presentes-3ano-v1";
+
+function getElement(id) {
+
+  return document.getElementById(id);
+
+}
+
+function showScreen(screen) {
+
+  ["start", "game", "finish"].forEach(id => {
+
+    getElement(id).classList.toggle("hidden", id !== screen);
+
+  });
+
+}
+
+function saveProgress() {
+
+  try {
+
+    localStorage.setItem(storageKey, JSON.stringify({
+
+      playerName: playerName,
+
+      currentQuestion: currentQuestion
+
+    }));
+
+  } catch (error) {
+
+    // O jogo continua a funcionar sem armazenamento.
+
+  }
+
+}
+
+function escapeHTML(text) {
+
+  const element = document.createElement("span");
+
+  element.textContent = text;
+
+  return element.innerHTML;
+
+}
+
+function startGame() {
+
+  playerName = getElement("nickname").value.trim() || "Duende Estrela";
+
+  currentQuestion = 0;
+
+  saveProgress();
+
+  renderQuestion();
+
+}
+
+function renderQuestion() {
+
+  const question = questions[currentQuestion];
+
+  const mission = missions[question.mission];
+
+  selectedAnswer = null;
+
+  solved = false;
+
+  showScreen("game");
+
+  getElement("progressText").textContent =
+
+    "Desafio " + (currentQuestion + 1) + " de 12";
+
+  getElement("presentText").textContent =
+
+    currentQuestion + " de 12 presentes";
+
+  getElement("progressFill").style.width =
+
+    (currentQuestion / 12 * 100) + "%";
+
+  getElement("missionLabel").textContent =
+
+    "Missão " + (question.mission + 1) + " · " + mission.subject;
+
+  getElement("missionTitle").textContent = mission.title;
+
+  getElement("question").textContent = question.text;
+
+  getElement("illustration").textContent = question.illustration;
+
+  getElement("sceneDescription").textContent =
+
+    "Ajuda os duendes a completar este desafio.";
+
+  getElement("badges").innerHTML = missions.map((mission, index) => {
+
+    const done = index < question.mission;
+
+    return (
+
+      '<span class="badge ' + (done ? "done" : "") + '">' +
+
+      (done ? "✓ " : "") +
+
+      "Missão " + (index + 1) +
+
+      "</span>"
+
+    );
+
+  }).join("");
+
+  getElement("feedback").classList.add("hidden");
+
+  getElement("hint").classList.add("hidden");
+
+  getElement("nextButton").classList.add("hidden");
+
+  getElement("checkButton").classList.remove("hidden");
+
+  getElement("hintButton").classList.remove("hidden");
+
+  const area = getElement("answerArea");
+
+  area.innerHTML = "";
+
+  if (question.options) {
+
+    const grid = document.createElement("div");
+
+    grid.className = "answers";
+
+    question.options.forEach(option => {
+
+      const button = document.createElement("button");
+
+      button.className = "answer";
+
+      button.textContent = option;
+
+      button.type = "button";
+
+      button.setAttribute("aria-pressed", "false");
+
+      button.addEventListener("click", () => {
+
+        if (solved) return;
+
+        selectedAnswer = option;
+
+        grid.querySelectorAll("button").forEach(other => {
+
+          other.classList.remove("selected");
+
+          other.setAttribute("aria-pressed", "false");
+
+        });
+
+        button.classList.add("selected");
+
+        button.setAttribute("aria-pressed", "true");
+
+      });
+
+      grid.appendChild(button);
+
+    });
+
+    area.appendChild(grid);
+
+  } else {
+
+    const container = document.createElement("div");
+
+    container.className = "number-inputs";
+
+    const numberOfInputs = Array.isArray(question.answer) ? 2 : 1;
+
+    for (let i = 0; i < numberOfInputs; i++) {
+
+      const input = document.createElement("input");
+
+      input.type = "number";
+
+      input.inputMode = "numeric";
+
+      input.placeholder = "?";
+
+      input.min = "0";
+
+      input.setAttribute("aria-label", "Resposta " + (i + 1));
+
+      container.appendChild(input);
+
+    }
+
+    area.appendChild(container);
+
+  }
+
+  window.scrollTo(0, 0);
+
+}
+
+function readAnswer() {
+
+  const question = questions[currentQuestion];
+
+  if (question.options) {
+
+    return selectedAnswer;
+
+  }
+
+  const inputs = Array.from(
+
+    getElement("answerArea").querySelectorAll("input")
+
+  );
+
+  const values = inputs.map(input => {
+
+    if (input.value.trim() === "") return null;
+
+    return Number(input.value);
+
+  });
+
+  return Array.isArray(question.answer) ? values : values[0];
+
+}
+
+function checkAnswer() {
+
+  if (solved) return;
+
+  const question = questions[currentQuestion];
+
+  const answer = readAnswer();
+
+  const feedback = getElement("feedback");
+
+  feedback.classList.remove("hidden");
+
+  if (
+
+    answer === null ||
+
+    (Array.isArray(answer) && answer.some(value => value === null))
+
+  ) {
+
+    feedback.className = "feedback";
+
+    feedback.textContent =
+
+      "Primeiro, escolhe ou escreve a tua resposta.";
+
+    return;
+
+  }
+
+  let correct = false;
+
+  if (Array.isArray(question.answer)) {
+
+    correct =
+
+      Array.isArray(answer) &&
+
+      answer.length === question.answer.length &&
+
+      answer.every((value, index) =>
+
+        value === question.answer[index]
+
+      );
+
+  } else {
+
+    correct = answer === question.answer;
+
+  }
+
+  if (correct) {
+
+    solved = true;
+
+    feedback.className = "feedback correct";
+
+    feedback.textContent =
+
+      "Muito bem, duende! 🎁 Mais um presente está pronto.";
+
+    getElement("checkButton").classList.add("hidden");
+
+    getElement("hintButton").classList.add("hidden");
+
+    getElement("nextButton").classList.remove("hidden");
+
+  } else {
+
+    feedback.className = "feedback";
+
+    feedback.textContent =
+
+      "Ainda não está certo. Pensa com calma e tenta novamente. Podes pedir uma pista.";
+
+  }
+
+}
+
+function showHint() {
+
+  const question = questions[currentQuestion];
+
+  const hint = getElement("hint");
+
+  hint.textContent = "💡 " + question.hint;
+
+  hint.classList.remove("hidden");
+
+}
+
+function nextQuestion() {
+
+  if (!solved) return;
+
+  currentQuestion++;
+
+  saveProgress();
+
+  if (currentQuestion >= questions.length) {
+
+    finishGame();
+
+  } else {
+
+    renderQuestion();
+
+  }
+
+}
+
+function finishGame() {
+
+  showScreen("finish");
+
+  getElement("certificate").innerHTML =
+
+    "Parabéns, <strong>" +
+
+    escapeHTML(playerName) +
+
+    "</strong>! És oficialmente um <strong>Ajudante do Pai Natal</strong>.";
+
+  currentQuestion = questions.length;
+
+  saveProgress();
+
+}
+
+function restartGame() {
+
+  currentQuestion = 0;
+
+  saveProgress();
+
+  renderQuestion();
+
+}
+
+function restoreProgress() {
+
+  try {
+
+    const saved = JSON.parse(localStorage.getItem(storageKey));
+
+    if (!saved || typeof saved.currentQuestion !== "number") {
+
+      return;
+
+    }
+
+    if (typeof saved.playerName !== "string") {
+
+      return;
+
+    }
+
+    playerName = saved.playerName;
+
+    currentQuestion = Math.max(
+
+      0,
+
+      Math.min(questions.length, saved.currentQuestion)
+
+    );
+
+    if (currentQuestion >= questions.length) {
+
+      finishGame();
+
+    } else {
+
+      renderQuestion();
+
+    }
+
+  } catch (error) {
+
+    showScreen("start");
+
+  }
+
+}
+
+getElement("startButton").addEventListener("click", startGame);
+
+getElement("checkButton").addEventListener("click", checkAnswer);
+
+getElement("hintButton").addEventListener("click", showHint);
+
+getElement("nextButton").addEventListener("click", nextQuestion);
+
+getElement("restartButton").addEventListener("click", restartGame);
+
+getElement("nickname").addEventListener("keydown", event => {
+
+  if (event.key === "Enter") {
+
+    startGame();
+
+  }
+
+});
+
+restoreProgress();
+
+</script>
+
+</body>
+
+</html>
